@@ -71,15 +71,32 @@ const StateLoopCard = ({ delay }) => {
           scale: 0.6,
         },
         {
-          y: "25%",
+          y: "30%",
           x: "20%",
-          scale: 0.7,
+          scale: 0.75,
           ease: "none",
           scrollTrigger: {
             trigger: cardRef.current,
             start: "top 85%",
             end: "top 20%",
             scrub: true,
+
+             // 👇 When scrolling DOWN → hide overflow
+          onUpdate: (self) => {
+            if (self.progress > 0.85) {
+              cardRef.current.classList.remove("overflow-visible");
+              cardRef.current.classList.add("overflow-hidden");
+            } else {
+              cardRef.current.classList.remove("overflow-hidden");
+              cardRef.current.classList.add("overflow-visible");
+            }
+          },
+
+          // 👇 When scrolling UP → show overflow again
+          onLeaveBack: () => {
+            cardRef.current.classList.remove("overflow-hidden");
+            cardRef.current.classList.add("overflow-visible");
+          },
           },
         }
       );

@@ -82,13 +82,13 @@ export default function Navbar() {
           </div>
 
           {/* Center: Navigation Items - Desktop */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-6">
             {NAV_ITEMS.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
                 onClick={(e) => handleSmoothScroll(e, item.href)}
-                className="text-[sm] font-normal text-gray-900 hover:text-gray-600 transition-colors duration-200"
+                className="text-[16px] font-normal text-gray-900 hover:text-gray-600 transition-colors duration-200"
               >
                 {item.label}
               </a>
@@ -117,7 +117,7 @@ export default function Navbar() {
           <div className="hidden md:flex items-center">
             <a
               href={"/dashboard"}
-              className="text-[16px] leading-5 font-medium py-[14px] px-[32px] rounded-full gap-4 bg-[#00BFA6]  text-white transition-colors duration-200 flex items-center"
+              className="text-[16px] leading-5 font-medium py-3.5 px-8 rounded-full gap-4 bg-[#00BFA6]  text-white transition-colors duration-200 flex items-center"
             >
               Dashboard
               <Image

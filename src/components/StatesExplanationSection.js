@@ -27,7 +27,6 @@ export default function StatesExplanationSection() {
     setCurrentStateIndex(clickedIndex);
   };
 
-  // GSAP Scroll Animation
   useEffect(() => {
     if (!imageRef.current || !cardRef.current) return;
 
@@ -36,13 +35,11 @@ export default function StatesExplanationSection() {
         imageRef.current,
         {
           y: "5%",
-          x: "0%",
           scaleX: 2,
           scaleY: 1.5,
         },
         {
           y: "60%",
-          x: "0%",
           scaleX: 1.1,
           scaleY: 1,
           ease: "none",
@@ -51,6 +48,23 @@ export default function StatesExplanationSection() {
             start: "top 80%",
             end: "top 20%",
             scrub: true,
+
+            // 👇 When scrolling DOWN → hide overflow
+            onUpdate: (self) => {
+              if (self.progress > 0.85) {
+                cardRef.current.classList.remove("overflow-visible");
+                cardRef.current.classList.add("overflow-hidden");
+              } else {
+                cardRef.current.classList.remove("overflow-hidden");
+                cardRef.current.classList.add("overflow-visible");
+              }
+            },
+
+            // 👇 When scrolling UP → show overflow again
+            onLeaveBack: () => {
+              cardRef.current.classList.remove("overflow-hidden");
+              cardRef.current.classList.add("overflow-visible");
+            },
           },
         }
       );
@@ -92,7 +106,7 @@ export default function StatesExplanationSection() {
         {/* State Display (Animation Stopped) */}
         <div
           ref={cardRef}
-          className="grid grid-cols-1 gap-8 md:gap-12 items-center mb-6"
+          className="grid grid-cols-1 gap-8 md:gap-12 items-center mb-6 overflow-hidden"
         >
           {/* Card */}
           <div className="flex justify-center">

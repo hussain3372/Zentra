@@ -90,7 +90,7 @@ const ImmersiveVisualCard = ({ delay = 0.2 }) => {
                 text-[45px] font-semibold leading-[56px]
               "
             >
-              14%
+              24% 
             </span>
           </p>
           <p className="text-[18px] font-bold leading-7 text-[#6B7280]">
