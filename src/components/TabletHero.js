@@ -38,10 +38,10 @@ export default function TabletHero() {
       >
         <Image
           src="/images/tablet-heroSection2.png"
-          width={size}
+          width={size}  
           height={(size * 500) / 580}
           alt="Dashboard"
-          className="w-full h-auto rounded-xl"
+          className="w-full h-auto rounded-[48px]"
           style={{ boxShadow: "0 0 44.636px 0 rgba(0, 0, 0, 0.30)" }}
         />
 

@@ -41,7 +41,7 @@ const ImmersiveVisualCard = ({ delay = 0.2 }) => {
           ease: "none",
           scrollTrigger: {
             trigger: cardRef.current,
-            start: "top 80%",
+            start: "top 135%",
             end: "top 30%",
             scrub: true,
           },

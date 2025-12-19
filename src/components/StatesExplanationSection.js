@@ -87,9 +87,9 @@ export default function StatesExplanationSection() {
         {/* Header Section */}
         <div className="mb-16 md:mb-20">
           <GradientHeading>
-            How Zentra
+            How zentra
             <br />
-            Thinks.
+            thinks.
           </GradientHeading>
 
           <div className="mt-8 max-w-2xl">
@@ -106,7 +106,7 @@ export default function StatesExplanationSection() {
         {/* State Display (Animation Stopped) */}
         <div
           ref={cardRef}
-          className="grid grid-cols-1 gap-8 md:gap-12 items-center mb-6 overflow-hidden"
+          className="grid grid-cols-1 gap-8 md:gap-12 items-center mb-6 overflow-hidden rounded-[46px]"
         >
           {/* Card */}
           <div className="flex justify-center">
@@ -142,7 +142,7 @@ export default function StatesExplanationSection() {
               </div>
 
               {/* Image Area */}
-              <div className="absolute bottom-0 z-20 w-full flex justify-center">
+              <div className="absolute bottom-0 z-20 w-full flex justify-center rounded-2xl">
                 <Image
                   ref={imageRef}
                   width={735}
@@ -163,15 +163,75 @@ export default function StatesExplanationSection() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: "easeOut" }} // <-- added duration
-            className="relative w-full h-[620px] shadow-[0_0_40px_0_rgba(0,0,0,0.12)] rounded-[32px]"
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="relative w-full h-[620px] shadow-[0_0_40px_0_rgba(0,0,0,0.12)] rounded-[32px] bg-[#00001F] p-6"
           >
-            <Image
-              src="/images/trading-states.png"
-              alt="Trading Visual"
-              fill
-              className="object-cover"
-            />
+            <div className="space-y-2">
+              <h1 className="text-[24px] text-white leading-6 font-bold">
+                Trading States
+              </h1>
+              <p className="text-[#FFFFFFCC] text-[14px] font-normal leading-4">
+                Your mindset informs the recommendations you receive.
+              </p>
+            </div>
+            <div className="w-full mt-6 space-y-3 relative z-10">
+              <motion.div
+                initial={{ opacity: 0, y: 300 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1, ease: "easeOut" }}
+              >
+                <div className="px-5 py-6 bg-[#FFFFFF3D] rounded-[24px] space-y-6">
+                  <h1 className="text-white text-[20px] font-bold leading-6">
+                    🧠 Psychological Stability Curve
+                  </h1>
+                  <div className="flex items-center gap-1">
+                    <p className="text-[14px] text-white font-normal leading-5">
+                      Track your psychological stability over time to spot
+                      emotional risk and know when your mindset supports
+                      decisions.
+                    </p>
+                    <Image
+                      src="/images/trading1.png"
+                      width={163}
+                      height={126}
+                      alt="trading1"
+                    />
+                  </div>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 300 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{
+                  duration: 1,
+                  ease: "easeOut",
+                  delay: 0.3,
+                }}
+              >
+                <div className="px-5 py-6 bg-[#FFFFFF3D] rounded-[24px] space-y-6">
+                  <h1 className="text-white text-[20px] font-bold leading-6">
+                    🧭 Behaviour Heatmap
+                  </h1>
+                  <div className="flex items-center gap-1">
+                    <p className="text-[14px] text-white font-normal leading-5">
+                      Visualize behavioral intensity across days and time blocks
+                      to identify high-risk periods and trade with greater
+                      control.
+                    </p>
+                    <Image
+                      src="/images/trading2.png"
+                      width={163}
+                      height={126}
+                      alt="trading1"
+                    />
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+            <div className="bg-[#16C9B5] blur-[150px] w-[348px] h-[348px] absolute bottom-10 z-0 left-10 rounded-full"></div>
           </motion.div>
 
           {/* RIGHT MAIN CARD */}
@@ -179,15 +239,29 @@ export default function StatesExplanationSection() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }} // <-- optional delay for stagger
-            className="relative w-full h-[620px] shadow-[0_0_40px_0_rgba(0,0,0,0.12)] rounded-[32px]"
+            transition={{ duration: 0.5, ease: "easeOut" }} // <-- added duration
+            className="relative w-full h-[620px] shadow-[0_0_40px_0_rgba(0,0,0,0.12)] rounded-[32px] bg-[#00001F] px-6 pt-6"
           >
-            <Image
-              src="/images/Frame.png"
-              alt="Dashboard Visual"
-              fill
-              className="object-cover"
-            />
+            <div className="flex flex-col items-center justify-between h-full overflow-hidden">
+              <h1 className="text-[32px] text-white leading-10 font-semibold flex text-center">
+                Clarity when it matters the most
+              </h1>
+              <motion.div
+                initial={{ opacity: 0, y: 400 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+              >
+                <Image
+                  src="/images/Wallpaper.png"
+                  className="relative z-10"
+                  width={600}
+                  height={670}
+                  alt="Wallpaper"
+                />
+                <div className="bg-[#16C9B5] blur-[150px] w-[348px] h-[348px] absolute bottom-10 z-0 left-10 rounded-full"></div>
+              </motion.div>
+            </div>
           </motion.div>
         </div>
       </Container>

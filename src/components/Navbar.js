@@ -88,7 +88,7 @@ export default function Navbar() {
                 key={item.href}
                 href={item.href}
                 onClick={(e) => handleSmoothScroll(e, item.href)}
-                className="text-[16px] font-normal text-gray-900 hover:text-gray-600 transition-colors duration-200"
+                className="text-[16px] leading-5 font-normal text-gray-900 hover:text-gray-600 transition-colors duration-200"
               >
                 {item.label}
               </a>

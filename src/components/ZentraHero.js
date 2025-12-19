@@ -29,7 +29,7 @@ export default function ZentraHero() {
                 width={32}
                 height={32}
                 alt="User"
-                className="w-8 h-8 rounded-full border-2 border-gray-800"
+                className="w-8 h-8 rounded-full"
               />
             ))}
           </div>
@@ -50,7 +50,7 @@ export default function ZentraHero() {
 
         {/* Subtitle */}
         <p
-          className="mt-4 max-w-2xl text-gray-700"
+          className="mt-4 text-gray-700 font-normal"
           style={{
             fontSize: "clamp(1rem, 2.2vw, 1.5rem)",
           }}
@@ -61,7 +61,7 @@ export default function ZentraHero() {
         {/* CTA */}
         <motion.a
           href="/dashboard"
-          className="hidden md:inline-flex mt-10 px-8 py-4 rounded-full bg-[#00BFA6] text-white items-center gap-3"
+          className="hidden md:inline-flex mt-10 px-8 py-3 rounded-full bg-[#00BFA6] text-white items-center gap-3"
           style={{ fontSize: "clamp(0.9rem, 1.2vw, 1.1rem)" }}
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
