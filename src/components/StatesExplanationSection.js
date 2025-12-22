@@ -27,17 +27,60 @@ export default function StatesExplanationSection() {
     setCurrentStateIndex(clickedIndex);
   };
 
+  // useEffect(() => {
+  //   if (!imageRef.current || !cardRef.current) return;
+
+  //   const ctx = gsap.context(() => {
+  //     gsap.fromTo(
+  //       imageRef.current,
+  //       {
+  //         y: "5%",
+  //         scaleX: 2,
+  //         scaleY: 1.5,
+  //       },
+  //       {
+  //         y: "60%",
+  //         scaleX: 1.1,
+  //         scaleY: 1,
+  //         ease: "none",
+  //         scrollTrigger: {
+  //           trigger: cardRef.current,
+  //           start: "top 80%",
+  //           end: "top 20%",
+  //           scrub: true,
+
+  //           // 👇 When scrolling DOWN → hide overflow
+  //           onUpdate: (self) => {
+  //             if (self.progress > 0.85) {
+  //               cardRef.current.classList.remove("overflow-visible");
+  //               cardRef.current.classList.add("overflow-hidden");
+  //             } else {
+  //               cardRef.current.classList.remove("overflow-hidden");
+  //               cardRef.current.classList.add("overflow-visible");
+  //             }
+  //           },
+
+  //           // 👇 When scrolling UP → show overflow again
+  //           onLeaveBack: () => {
+  //             cardRef.current.classList.remove("overflow-hidden");
+  //             cardRef.current.classList.add("overflow-visible");
+  //           },
+  //         },
+  //       }
+  //     );
+  //   });
+
+  //   return () => ctx.revert();
+  // }, []);
   useEffect(() => {
     if (!imageRef.current || !cardRef.current) return;
 
-    const ctx = gsap.context(() => {
+    const mm = gsap.matchMedia();
+
+    mm.add("(min-width: 768px)", () => {
       gsap.fromTo(
         imageRef.current,
-        {
-          y: "5%",
-          scaleX: 2,
-          scaleY: 1.5,
-        },
+        { y: "5%", scaleX: 1.7, scaleY: 1.5 },
         {
           y: "60%",
           scaleX: 1.1,
@@ -45,38 +88,35 @@ export default function StatesExplanationSection() {
           ease: "none",
           scrollTrigger: {
             trigger: cardRef.current,
-            start: "top 80%",
+            start: "top 110%",
             end: "top 20%",
             scrub: true,
-
-            // 👇 When scrolling DOWN → hide overflow
             onUpdate: (self) => {
               if (self.progress > 0.85) {
-                cardRef.current.classList.remove("overflow-visible");
                 cardRef.current.classList.add("overflow-hidden");
+                cardRef.current.classList.remove("overflow-visible");
               } else {
-                cardRef.current.classList.remove("overflow-hidden");
                 cardRef.current.classList.add("overflow-visible");
+                cardRef.current.classList.remove("overflow-hidden");
               }
-            },
-
-            // 👇 When scrolling UP → show overflow again
-            onLeaveBack: () => {
-              cardRef.current.classList.remove("overflow-hidden");
-              cardRef.current.classList.add("overflow-visible");
             },
           },
         }
       );
     });
 
-    return () => ctx.revert();
-  }, []);
+    mm.add("(max-width: 767px)", () => {
+      gsap.set(imageRef.current, { clearProps: "all" });
+      cardRef.current.classList.add("overflow-visible");
+      cardRef.current.classList.remove("overflow-hidden");
+    });
 
+    return () => mm.revert();
+  }, []);
   return (
     <section
       id="states-explanation"
-      className="min-h-screen px-6 md:px-[100px] py-[100px]  relative scroll-mt-12 overflow-hidden"
+      className="min-h-screen px-6 md:px-[100px] py-[50] sm:py-[100px]  relative scroll-mt-12 overflow-hidden"
       style={{
         borderRadius: "0 0 64px 64px",
         background:
@@ -85,7 +125,7 @@ export default function StatesExplanationSection() {
     >
       <Container maxWidth="4xl" className="relative z-10" padding={false}>
         {/* Header Section */}
-        <div className="mb-16 md:mb-20">
+        <div className="mb-6 md:mb-20">
           <GradientHeading>
             How zentra
             <br />
@@ -122,10 +162,8 @@ export default function StatesExplanationSection() {
                   />
                 </div>
               </div>
-
-              {/* Top Title */}
-              <div className="pt-[75px] text-center z-10 relative">
-                <h3 className="text-[40px] leading-[52px] font-semibold">
+              <div className="pt-[75px] text-center z-10 relative px-4">
+                <h3 className="mx-auto max-w-[22rem] sm:max-w-none">
                   <span
                     style={{
                       background:
@@ -134,7 +172,13 @@ export default function StatesExplanationSection() {
                       backgroundClip: "text",
                       WebkitTextFillColor: "transparent",
                     }}
-                    className="text-[40px] leading-[52px] font-semibold"
+                    className="
+        block
+        text-[32px] sm:text-[40px]
+        leading-[40px] sm:leading-[52px]
+        font-semibold
+        break-words
+      "
                   >
                     Psychology, made measurable
                   </span>
@@ -149,7 +193,7 @@ export default function StatesExplanationSection() {
                   height={404}
                   src="/images/tablet-heroSection4.png"
                   alt="Dashboard Preview"
-                  className="w-[90%] translate-y-[61%] rounded-xl"
+                  className="sm:w-[90%] w-[33%] sm:translate-y-[61%] -translate-y-[15%%] rounded-xl"
                 />
               </div>
             </div>
@@ -164,7 +208,7 @@ export default function StatesExplanationSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="relative w-full h-[620px] shadow-[0_0_40px_0_rgba(0,0,0,0.12)] rounded-[32px] bg-[#00001F] p-6"
+            className="relative w-full h-full h-[988px] sm:max-h-[620px] shadow-[0_0_40px_0_rgba(0,0,0,0.12)] rounded-[32px] bg-[#00001F] p-6"
           >
             <div className="space-y-2">
               <h1 className="text-[24px] text-white leading-6 font-bold">
@@ -181,21 +225,24 @@ export default function StatesExplanationSection() {
                 viewport={{ once: true }}
                 transition={{ duration: 1, ease: "easeOut" }}
               >
-                <div className="px-5 py-6 bg-[#FFFFFF3D] rounded-[24px] space-y-6">
+                <div className="px-5 py-6 bg-[#FFFFFF3D] rounded-[24px] space-y-4 sm:space-y-6">
                   <h1 className="text-white text-[20px] font-bold leading-6">
                     🧠 Psychological Stability Curve
                   </h1>
-                  <div className="flex items-center gap-1">
-                    <p className="text-[14px] text-white font-normal leading-5">
+
+                  <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-1">
+                    <p className="text-[14px] text-white font-normal leading-5 sm:flex-1">
                       Track your psychological stability over time to spot
                       emotional risk and know when your mindset supports
                       decisions.
                     </p>
+
                     <Image
                       src="/images/trading1.png"
                       width={163}
                       height={126}
                       alt="trading1"
+                      className="w-full sm:w-[163px] h-auto object-contain"
                     />
                   </div>
                 </div>
@@ -211,21 +258,24 @@ export default function StatesExplanationSection() {
                   delay: 0.3,
                 }}
               >
-                <div className="px-5 py-6 bg-[#FFFFFF3D] rounded-[24px] space-y-6">
+                <div className="px-5 py-6 bg-[#FFFFFF3D] rounded-[24px] space-y-4 sm:space-y-6">
                   <h1 className="text-white text-[20px] font-bold leading-6">
                     🧭 Behaviour Heatmap
                   </h1>
-                  <div className="flex items-center gap-1">
-                    <p className="text-[14px] text-white font-normal leading-5">
+
+                  <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-1">
+                    <p className="text-[14px] text-white font-normal leading-5 sm:flex-1">
                       Visualize behavioral intensity across days and time blocks
                       to identify high-risk periods and trade with greater
                       control.
                     </p>
+
                     <Image
                       src="/images/trading2.png"
                       width={163}
                       height={126}
                       alt="trading1"
+                      className="w-full sm:w-[163px] h-auto object-contain"
                     />
                   </div>
                 </div>
@@ -235,17 +285,32 @@ export default function StatesExplanationSection() {
           </motion.div>
 
           {/* RIGHT MAIN CARD */}
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, ease: "easeOut" }} // <-- added duration
-            className="relative w-full h-[620px] shadow-[0_0_40px_0_rgba(0,0,0,0.12)] rounded-[32px] bg-[#00001F] px-6 pt-6"
+            className="relative w-full h-[425px] sm:h-[620px] shadow-[0_0_40px_0_rgba(0,0,0,0.12)] rounded-[32px] bg-[#00001F] px-6 pt-6"
           >
             <div className="flex flex-col items-center justify-between h-full overflow-hidden">
-              <h1 className="text-[32px] text-white leading-10 font-semibold flex text-center">
+              <h1
+                className="
+    text-[28px] sm:text-[32px]
+    leading-10
+    font-semibold
+    text-center
+    bg-clip-text text-transparent
+  "
+                style={{
+                  background:
+                    "linear-gradient(280deg, #8A8AFF 16.58%, #00BFA6 92.27%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                }}
+              >
                 Clarity when it matters the most
               </h1>
+
               <motion.div
                 initial={{ opacity: 0, y: 400 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -262,7 +327,51 @@ export default function StatesExplanationSection() {
                 <div className="bg-[#16C9B5] blur-[150px] w-[348px] h-[348px] absolute bottom-10 z-0 left-10 rounded-full"></div>
               </motion.div>
             </div>
-          </motion.div>
+          </motion.div> */}
+
+
+          {/* RIGHT MAIN CARD */}
+<motion.div
+  initial={{ opacity: 0, y: 30 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.5, ease: "easeOut" }}
+  className="relative w-full h-[465px] sm:h-[620px] shadow-[0_0_40px_0_rgba(0,0,0,0.12)] rounded-[32px] bg-[#00001F] px-6 pt-6"
+>
+  <div className="flex flex-col items-center justify-between h-full overflow-hidden">
+    <h1
+      className="text-[28px] sm:text-[32px] leading-10 font-semibold w-full max-w-[337px] text-center bg-clip-text text-transparent"
+      style={{
+        background: "linear-gradient(280deg, #8A8AFF 16.58%, #00BFA6 92.27%)",
+        WebkitBackgroundClip: "text",
+        WebkitTextFillColor: "transparent",
+      }}
+    >
+      Clarity when it matters the most
+    </h1>
+
+    <motion.div
+      // {/* FIX: Reduced y offset for mobile (100 instead of 400) */}
+      initial={{ opacity: 0, y: 100 }} 
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }} // Added amount to ensure it triggers easier
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className="relative flex justify-center"
+    >
+      <Image
+        src="/images/Wallpaper.png"
+        // {/* FIX: Added w-full h-auto for responsive scaling */}
+        className="relative z-10 w-full h-auto max-w-[300px] sm:max-w-none" 
+        width={600}
+        height={670}
+        alt="Wallpaper"
+        priority // Added priority to ensure it loads immediately
+      />
+      {/* Background Glow */}
+      <div className="bg-[#16C9B5] blur-[80px] sm:blur-[150px] w-[200px] h-[200px] sm:w-[348px] sm:h-[348px] absolute bottom-0 z-0 left-1/2 -translate-x-1/2 rounded-full opacity-50"></div>
+    </motion.div>
+  </div>
+</motion.div>
         </div>
       </Container>
     </section>

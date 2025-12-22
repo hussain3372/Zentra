@@ -21,6 +21,16 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const pathname = usePathname();
+  const [scrolled, setScrolled] = useState(false);
+
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     setScrolled(window.scrollY > 10);
+  //   };
+
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, []);
 
   useEffect(() => {
     // Check authentication status
@@ -31,14 +41,12 @@ export default function Navbar() {
 
     checkAuth();
 
-    // Listen for storage changes (e.g., when user logs in/out in another tab)
     const handleStorageChange = () => {
       checkAuth();
     };
 
     window.addEventListener("storage", handleStorageChange);
 
-    // Also check on pathname change in case auth state changed
     checkAuth();
 
     return () => {
@@ -47,17 +55,14 @@ export default function Navbar() {
   }, [pathname]);
 
   const handleSmoothScroll = (e, href) => {
-    // Only handle smooth scroll for hash links
     if (href.startsWith("#")) {
       e.preventDefault();
 
-      // If not on homepage, navigate to homepage with hash
       if (pathname !== "/") {
         window.location.href = `/${href}`;
         return;
       }
 
-      // If on homepage, smooth scroll to section
       const element = document.querySelector(href);
       if (element) {
         element.scrollIntoView({
@@ -76,10 +81,14 @@ export default function Navbar() {
     ${open ? "hidden md:block" : "block"}
   `}
       >
-        <nav className="  max-w-[1062px] bg-[#FFF] sm:mx-auto py-3 pr-4 pl-8 shadow-[0_0_40px_0_rgba(0,0,0,0.16)] flex items-center justify-between mt-8 mb-[27px] rounded-full border mx-2.5   border-[#EEEEEE] ">
-          <div className="flex items-center">
-            <Logo />
-          </div>
+        <div
+          className={`py-[30px] transition-colors duration-300
+  `}
+        >
+          <nav className="  max-w-[1062px] bg-[#FFF] sm:mx-auto py-3 pr-4 pl-8 shadow-[0_0_40px_0_rgba(0,0,0,0.16)] flex items-center justify-between  rounded-full border mx-2.5   border-[#EEEEEE] ">
+            <div className="flex items-center">
+              <Logo />
+            </div>
 
           {/* Center: Navigation Items - Desktop */}
           <div className="hidden md:flex items-center gap-6">
@@ -95,8 +104,8 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Right: Login/Dashboard Button */}
-          {/* <div className="hidden md:flex items-center">
+            {/* Right: Login/Dashboard Button */}
+            {/* <div className="hidden md:flex items-center">
             <a
               href={isLoggedIn ? "/dashboard" : "/auth/login"}
               className="text-[16px] leading-5 font-normal text-[#18181BCC] hover:text-gray-600 transition-colors duration-200 flex items-center gap-2"
@@ -130,27 +139,28 @@ export default function Navbar() {
             </a>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden p-2 focus:outline-none"
-            aria-label="Open menu"
-            onClick={() => setOpen(true)}
-          >
-            <svg
-              className="w-5 h-5 text-gray-900"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
+            {/* Mobile Menu Button */}
+            <button
+              className="md:hidden p-2 focus:outline-none"
+              aria-label="Open menu"
+              onClick={() => setOpen(true)}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-          </button>
-        </nav>
+              <svg
+                className="w-5 h-5 text-gray-900"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
+          </nav>
+        </div>
       </header>
 
       {/* Mobile Menu Modal */}

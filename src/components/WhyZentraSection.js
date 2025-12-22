@@ -14,7 +14,7 @@ const FloatingLabel = ({ children, position, delay = 0, icon }) => (
     whileInView={{ opacity: 1, scale: 1 }}
     viewport={{ once: true }}
     transition={{ duration: 0.5, delay }}
-    className={`absolute ${position} bg-white rounded-full px-4 py-2 shadow-lg flex items-center gap-2 text-[10px] md:text-xs font-semibold whitespace-nowrap z-50 text-black border border-gray-100`}
+    className={`absolute ${position} bg-white rounded-full px-4 py-2 shadow-lg flex items-center gap-2 text-[10px] md:text-[12px] leading-4 font-medium whitespace-nowrap z-50 text-black border border-gray-100`}
   >
     {icon && <span className="text-base">{icon}</span>}
     {!icon && <span className="w-1.5 h-1.5 bg-red-400 rounded-full"></span>}
@@ -33,15 +33,22 @@ const DashboardVisual = () => (
     {/* 1. LAYERED CONTAINER (The "Envelope") */}
     <div className="relative w-full max-w-[800px] mx-auto aspect-[16/10] md:aspect-[16/8] flex items-end justify-center">
       {/* BACKGROUND OVERLAY (The back part of the pocket) */}
-      <div className="absolute bottom-0 w-[95%] h-[88%] sm:h-[70%] bg-[#1a1b2e]/60 backdrop-blur-md rounded-[40px] border border-white/5 z-0" />
+      <div className="absolute bottom-0 w-[95%] h-[88%] sm:h-[70%] bg-[#1a1b2e]/60 backdrop-blur-md rounded-[40px] border border-[#FFFFFF1F] z-0" />
 
       {/* 2. THE DASHBOARD IMAGE (Tucked inside) */}
       <motion.div
-        initial={{ y: 400, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
+        initial={{
+          y: typeof window !== "undefined" && window.innerWidth < 640 ? 0 : 400,
+          opacity:
+            typeof window !== "undefined" && window.innerWidth < 640 ? 1 : 0,
+        }}
+        whileInView={{
+          y: typeof window !== "undefined" && window.innerWidth < 640 ? 0 : -50,
+          opacity: 1,
+        }}
         transition={{ duration: 1, ease: "easeOut" }}
-        viewport={{ once: true }} // optional: animate only once
-        className="relative z-10 w-[85%] sm:mb-[5%] mb-[30%] shadow-2xl overflow-hidden"
+        viewport={{ once: true }}
+        className="relative z-10 w-[85%] shadow-2xl overflow-visible sm:top-0 -top-[6.5rem]"
       >
         <Image
           src="/images/why-zentra1.png"
@@ -53,8 +60,8 @@ const DashboardVisual = () => (
       </motion.div>
 
       {/* 3. FRONT OVERLAY (The "Live Insights" Panel) */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full  z-30 pointer-events-none">
-        <div className="bg-[#00001F7A] from-[#1a1b2e]/80 to-[#0d0e1c] backdrop-blur-xl  pb-4 sm:pb-[33px] pt-2 sm:pt-6 pl-4 sm:pl-[60px] pr-4 sm:pr-[84px]  rounded-[40px]  shadow-[0_-20px_50px_rgba(0,0,0,0.5)] pointer-events-auto">
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full  z-30 pointer-events-none  ">
+        <div className="bg-[#00001F7A] from-[#1a1b2e]/80 to-[#0d0e1c] backdrop-blur-xl border-t border-[#FFFFFF1F]   pb-4 sm:pb-[33px] pt-2 sm:pt-6 pl-4 sm:pl-[60px] pr-4 sm:pr-[84px]  rounded-[40px]  shadow-[0_-20px_50px_rgba(0,0,0,0.5)] pointer-events-auto">
           <div className="flex items-center gap-2 mb-3">
             <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse shadow-[0_0_8px_#4ade80]"></span>
             <span className="sm:text-[14px] text-[12px] font-medium leading-[18px] text-white uppercase tracking-widest">
@@ -96,6 +103,8 @@ const DashboardVisual = () => (
           <FloatingLabel position="relative" delay={0.5} icon="🔍">
             Behavioral Clarity
           </FloatingLabel>
+
+          
         </div>
 
         {/* IMAGES - Position these separately */}
@@ -165,16 +174,13 @@ export default function WhyZentraSection() {
         {/* Gradient glow effect */}
         <div className="absolute inset-0 bg-gradient-to-t from-black via-[#00021A] to-[#001040] opacity-80 pointer-events-none" />
 
-        {/* Content Container */}
         <Container maxWidth="4xl" className="relative z-10" padding={false}>
-          {/* Centered Content Box for Mobile */}
-          <div className="max-w-sm mx-auto md:max-w-none md:mx-0 bg-[black/40 backdrop-blur-sm] rounded-3xl p-8 md:p-12 border border-white/10 md:bg-transparent md:backdrop-blur-none md:border-none md:rounded-none">
-            {/* Brand Name */}
+          <div className="max-w-sm mx-auto md:max-w-none md:mx-0 bg-[black/40 backdrop-blur-sm] rounded-3xl p-6 md:p-12 border border-white/10 md:bg-transparent md:backdrop-blur-none md:border-none md:rounded-none">
             <motion.h3
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="mb-8 md:mb-12 text-white font-bold text-left"
+              className="mb-8 md:mb-12 text-white font-normal text-[40px] sm:text-[60px] leading-[48px] sm:leading-[60px] text-left"
             >
               Zentra
             </motion.h3>
@@ -188,7 +194,6 @@ export default function WhyZentraSection() {
               </GradientHeading>
             </div>
 
-            {/* Description Paragraph */}
             <div className="mb-6">
               <DescriptionText className="!text-gray-300 text-left">
                 Powered by intelligence and grounded in psychology. Zentra
@@ -201,11 +206,11 @@ export default function WhyZentraSection() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="text-left"
+              className="text-left mb-2 sm:mb-0"
             >
               <Link
                 href="#states-explanation"
-                className="inline-flex items-center gap-2 text-[#00BFA6] transition-all group"
+                className="inline-flex items-center text-[18px] sm:text-[20px] font-normal leading-6 gap-2 text-[#00BFA6] transition-all group"
               >
                 See how Zentra works
                 <span className="group-hover:translate-x-1 transition-transform text-[#00BFA6]">

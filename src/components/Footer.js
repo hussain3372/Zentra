@@ -9,7 +9,7 @@ const NAV_ITEMS = [
   { label: "How It Works", href: "#how-it-works" },
   { label: "Features", href: "#features" },
   { label: "Pricing", href: "/pricing" },
-  { label: "Dashboard", href: "/dashboard" },
+  // { label: "Dashboard", href: "/dashboard" },
 ];
 
 export default function Footer() {
@@ -38,22 +38,35 @@ export default function Footer() {
   };
 
   return (
-    <footer className="w-full bg-gray-50 border-t border-gray-200">
-      <div className="max-w-7xl mx-auto px-6 py-8">
+    <footer className="w-full ">
+      <div className=" mx-auto px-5 sm:px-[120px] py-[30px]">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           {/* Logo */}
-          <div className="flex items-center">
-            <Logo />
-          </div>
+          {/* Logo */}
+<div className="flex flex-col items-start">
+  <Logo />
+
+  <p className="mt-2 text-[12px] font-normal leading-4 text-[#18181BA3]">
+    © ZENTRA 2025. All Rights Reserved{" "}
+    <a
+      href="https://carlosreinoso.co.uk/web-dev"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-xs text-gray-600 font-bold hover:text-gray-600 transition-colors duration-200"
+    >
+    </a>
+  </p>
+</div>
+
 
           {/* Navigation Links */}
-          <nav className="flex flex-wrap items-center justify-center gap-6">
+          <nav className="flex flex-wrap items-center justify-center gap-8">
             {NAV_ITEMS.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
                 onClick={(e) => handleClick(e, item.href)}
-                className="text-sm text-gray-900 hover:text-gray-600 transition-colors duration-200"
+                className="text-[16px] font-normal leading-5 text-[#18181BCC]  hover:text-gray-600 transition-colors duration-200"
               >
                 {item.label}
               </a>
@@ -61,7 +74,7 @@ export default function Footer() {
           </nav>
 
           {/* Copyright & Credits */}
-          <div className="flex flex-col items-center md:items-end gap-1">
+          {/* <div className="flex flex-col items-center md:items-end gap-1">
             <p className="text-sm text-gray-600">
               © {new Date().getFullYear()} Zentra
             </p>
@@ -76,7 +89,7 @@ export default function Footer() {
                 Carlos Reinoso
               </a>
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
     </footer>

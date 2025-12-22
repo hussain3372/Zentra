@@ -25,11 +25,39 @@ const ImmersiveVisualCard = ({ delay = 0.2 }) => {
   const imageRef = useRef(null);
   const cardRef = useRef(null);
 
+  // useEffect(() => {
+  //   if (!imageRef.current || !cardRef.current) return;
+
+  //   const ctx = gsap.context(() => {
+  //     gsap.fromTo(
+  //       imageRef.current,
+  //       {
+  //         y: "-110%",
+  //         x: "0%",
+  //       },
+  //       {
+  //         y: "0",
+  //         x: "0%",
+  //         ease: "none",
+  //         scrollTrigger: {
+  //           trigger: cardRef.current,
+  //           start: "top 135%",
+  //           end: "top 30%",
+  //           scrub: true,
+  //         },
+  //       }
+  //     );
+  //   });
+
+  //   return () => ctx.revert();
+  // }, []);
   useEffect(() => {
     if (!imageRef.current || !cardRef.current) return;
 
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
+    const mm = gsap.matchMedia();
+
+    mm.add("(min-width: 1024px)", () => {
+      const tween = gsap.fromTo(
         imageRef.current,
         {
           y: "-110%",
@@ -47,9 +75,22 @@ const ImmersiveVisualCard = ({ delay = 0.2 }) => {
           },
         }
       );
+
+      return () => {
+        tween.scrollTrigger?.kill();
+        tween.kill();
+      };
     });
 
-    return () => ctx.revert();
+    mm.add("(max-width: 1023px)", () => {
+      gsap.set(imageRef.current, {
+        clearProps: "all",
+        y: 0,
+        x: 0,
+      });
+    });
+
+    return () => mm.revert();
   }, []);
 
   return (
@@ -80,17 +121,17 @@ const ImmersiveVisualCard = ({ delay = 0.2 }) => {
           <p className="text-sm font-semibold uppercase tracking-[0.35em] text-gray-500">
             Update:
           </p>
-          <p className="text-[45px] leading-[56px] font-semibold text-[#18181B]">
+          <p className="sm:text-[45px] text-[38px] leading-[48px] sm:leading-[56px] font-semibold text-[#18181B]">
             Revenge trades reduced by{" "}
             <span
               className="
                 inline-flex items-center gap-1
                 bg-[linear-gradient(90deg,#0062FF_0%,#00FFE3_100%)]
                 bg-clip-text text-transparent
-                text-[45px] font-semibold leading-[56px]
+                sm:text-[45px] text-[38px] leading-[48px] sm:leading-[56px] font-semibold
               "
             >
-              24% 
+              24%
             </span>
           </p>
           <p className="text-[18px] font-bold leading-7 text-[#6B7280]">
@@ -198,7 +239,6 @@ const PerformanceMetricsCard = ({ delay }) => (
     </div>
   </motion.div>
 );
-
 export default function ForEveryTraderSection() {
   const contentRef = useRef(null);
   const headerRef = useRef(null);
@@ -238,15 +278,23 @@ export default function ForEveryTraderSection() {
             background: linear-gradient(to bottom, #ffffff 0%, #e8f8f8 45%, #c4eded 50%, #9de0e0 55%, #6bc5d5 70%, #4a9ec6 85%, #34578d 100%);
           }
         }
+        
+        /* Disable animation on mobile */
+        @media (max-width: 1023px) {
+          .text-animation-container {
+            transform: none !important;
+            opacity: 1 !important;
+          }
+        }
       `}</style>
+
       <section
         id="for-every-trader"
-        className="min-h-screen px-6 md:px-16 py-24 pb-32 relative overflow-visible scroll-mt-12 rounded-b-[48px] md:rounded-b-[64px]"
+        className="min-h-screen px-6 md:px-16 pt-[96px] pb-[50px] sm:pb-[128px] relative overflow-visible scroll-mt-12 rounded-b-[48px] md:rounded-b-[64px]"
       >
         <Container maxWidth="4xl" className="relative z-10" padding={false}>
           {/* Header Section */}
           <div className="mb-20" ref={headerRef}>
-            {/* Large Heading with custom gradient */}
             <GradientHeading>
               For every
               <br />
@@ -255,10 +303,10 @@ export default function ForEveryTraderSection() {
 
             {/* Description */}
             <div className="mt-8 max-w-4xl overflow-hidden">
-              <div ref={contentRef}>
+              <div ref={contentRef} className="text-animation-container">
                 <DescriptionText
                   delay={0.2}
-                  className="text-[#9CA3AF] leading-[39px] text-[24px] text-medium"
+                  className="text-[#9CA3AF] leading-[39px] text-[24px] !font-medium"
                 >
                   Your trading behavior tells a story. Zentra listens, learns
                   and helps you stay in control. Because mastering yourself is

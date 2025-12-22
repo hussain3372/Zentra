@@ -59,10 +59,59 @@ const StateLoopCard = ({ delay }) => {
   }, []);
 
   // GSAP Scroll Animation
+  // useEffect(() => {
+  //   if (!imageRef.current || !cardRef.current) return;
+
+  //   const ctx = gsap.context(() => {
+  //     gsap.fromTo(
+  //       imageRef.current,
+  //       {
+  //         y: -280,
+  //         x: "20%",
+  //         scale: 0.6,
+  //       },
+  //       {
+  //         y: "30%",
+  //         x: "20%",
+  //         scale: 0.75,
+  //         ease: "none",
+  //         scrollTrigger: {
+  //           trigger: cardRef.current,
+  //           start: "top 85%",
+  //           end: "top 20%",
+  //           scrub: true,
+
+  //           // 👇 When scrolling DOWN → hide overflow
+  //           onUpdate: (self) => {
+  //             if (self.progress > 0.85) {
+  //               cardRef.current.classList.remove("overflow-visible");
+  //               cardRef.current.classList.add("overflow-hidden");
+  //             } else {
+  //               cardRef.current.classList.remove("overflow-hidden");
+  //               cardRef.current.classList.add("overflow-visible");
+  //             }
+  //           },
+
+  //           // 👇 When scrolling UP → show overflow again
+  //           onLeaveBack: () => {
+  //             cardRef.current.classList.remove("overflow-hidden");
+  //             cardRef.current.classList.add("overflow-visible");
+  //           },
+  //         },
+  //       }
+  //     );
+  //   });
+
+  //   return () => ctx.revert();
+  // }, []);
+
+
   useEffect(() => {
     if (!imageRef.current || !cardRef.current) return;
 
-    const ctx = gsap.context(() => {
+    const mm = gsap.matchMedia();
+
+    mm.add("(min-width: 768px)", () => {
       gsap.fromTo(
         imageRef.current,
         {
@@ -80,49 +129,49 @@ const StateLoopCard = ({ delay }) => {
             start: "top 85%",
             end: "top 20%",
             scrub: true,
-
-             // 👇 When scrolling DOWN → hide overflow
-          onUpdate: (self) => {
-            if (self.progress > 0.85) {
-              cardRef.current.classList.remove("overflow-visible");
-              cardRef.current.classList.add("overflow-hidden");
-            } else {
-              cardRef.current.classList.remove("overflow-hidden");
+            onUpdate: (self) => {
+              if (self.progress > 0.85) {
+                cardRef.current.classList.add("overflow-hidden");
+                cardRef.current.classList.remove("overflow-visible");
+              } else {
+                cardRef.current.classList.add("overflow-visible");
+                cardRef.current.classList.remove("overflow-hidden");
+              }
+            },
+            onLeaveBack: () => {
               cardRef.current.classList.add("overflow-visible");
-            }
-          },
-
-          // 👇 When scrolling UP → show overflow again
-          onLeaveBack: () => {
-            cardRef.current.classList.remove("overflow-hidden");
-            cardRef.current.classList.add("overflow-visible");
-          },
+              cardRef.current.classList.remove("overflow-hidden");
+            },
           },
         }
       );
     });
 
-    return () => ctx.revert();
-  }, []);
+    mm.add("(max-width: 767px)", () => {
+      gsap.set(imageRef.current, { clearProps: "all" });
+      
+      cardRef.current.classList.remove("overflow-hidden");
+      cardRef.current.classList.add("overflow-visible");
+    });
 
+    return () => mm.revert();
+  }, []);
   return (
     <div className="flex justify-center">
       <div
         ref={cardRef}
         className="relative bg-white rounded-[2.5rem] shadow-2xl w-full max-w-[896px] h-[400px] group "
       >
-        {/* 1. Icon moved to top-left corner */}
-        <div className="absolute top-10 left-10 z-20">
+        <div className="absolute top-[0.5rem] sm:top-10 left-10 z-20">
           <div className="flex items-center justify-center">
             <img src="/images/Frame.svg" alt="brain" height={40} width={40} />
           </div>
         </div>
 
-        {/* 2. Text moved to top-left, positioned below the icon */}
-        <div className="absolute top-[6rem] left-10 z-10 max-w-md text-left">
-          <h3 className="text-[36px] md:text-[40px] leading-[48px] font-semibold max-w-[312px]">
+        <div className="absolute top-[4rem] sm:top-[6rem] left-10 z-10 max-w-md text-left">
+          <h3 className=" max-w-[312px]">
             <span
-              className="text-[36px] md:text-[40px] leading-[48px] font-semibold"
+              className="text-[32px] md:text-[40px] leading-[40px] sm:leading-[48px] font-semibold"
               style={{
                 background:
                   "linear-gradient(114deg, #000080 4.51%, #00BFA6 56.18%, #F0E8D0 107.84%)",
@@ -131,9 +180,9 @@ const StateLoopCard = ({ delay }) => {
                 WebkitTextFillColor: "transparent",
               }}
             >
-              One Place
-              <br /> One Process
-              <br /> Endless Clarity
+              One Place.
+              <br /> One Process.
+              <br /> Endless Clarity.
             </span>
           </h3>
         </div>
@@ -146,7 +195,7 @@ const StateLoopCard = ({ delay }) => {
             alt="Dashboard Preview"
             width={786}
             height={422}
-            className="w-[85%] md:w-[91%]"
+            className="w-[75%] md:w-[81%]"
             style={{
               transform: "translate(40%, 25%)",
             }}
@@ -165,7 +214,7 @@ const PlanCard = ({ delay }) => {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay }}
       viewport={{ once: true }}
-      className="bg-white shadow-[0_0_40px_0_rgba(0,0,0,0.12)] rounded-[32px] p-6 "
+      className="bg-white shadow-[0_0_40px_0_rgba(0,0,0,0.12)] rounded-[32px] p-6  h-[500px] sm:h-[432px]"
     >
       {/* Header with Title and Edit Button */}
       <div className="mb-8">
@@ -255,10 +304,8 @@ const EvolutionCard = ({ delay }) => {
       className="bg-[#00001F]  text-white rounded-3xl p-6 shadow-xl flex flex-col justify-between relative overflow-hidden"
     >
       <div>
-        <h3 className="text-xl font-semibold mb-4 text-white">
+        <h3 className="text-[20px] sm:text-[24px] leading-[28px] sm:leading-8 font-bold mb-2 text-white">
           Evolve Your Performance
-          <br />
-          performance
         </h3>
         <p className="text-[14px] font-normal leading-5 text-[rgba(255,255,255,0.88)]">
           Your motion score has{" "}
@@ -299,14 +346,14 @@ export default function InControlSection() {
       `}</style>
       <section
         id="features"
-        className="min-h-screen px-6 md:px-[272px] py-[128px]  relative overflow-visible scroll-mt-12 rounded-b-[48px] md:rounded-b-[64px]"
+        className="min-h-screen px-6 md:px-[272px] py-[50px] sm:py-[128px]  relative overflow-visible scroll-mt-12 rounded-b-[48px] md:rounded-b-[64px]"
       >
         <Container
           maxWidth="4xl"
           className="relative z-10 overflow-hidden"
           padding={false}
         >
-          <div className="mb-20">
+          <div className=" mb-8 sm:mb-20">
             <GradientHeading>
               In
               <br />
@@ -317,7 +364,7 @@ export default function InControlSection() {
             <div className="mt-8 max-w-sm ">
               <DescriptionText
                 delay={0.2}
-                className="text-[#9CA3AF] text-[24px] font-bold leading-[39px] max-w-[353px] w-full"
+                className="text-[#9CA3AF] text-[20px] sm:text-[24px] !font-bold leading-[30px] sm:leading-[39px] max-w-[353px] w-full"
               >
                 Zentra gives you deep insight into how you trade — and why.
                 Every feature works together to keep your mind, data, and
@@ -329,7 +376,7 @@ export default function InControlSection() {
           {/* Cards Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* State Loop Card - Full width */}
-            <div className="md:col-span-2">
+            <div id="pin-windmill-wrap" className="md:col-span-2">
               <StateLoopCard delay={0.3} />
             </div>
 
