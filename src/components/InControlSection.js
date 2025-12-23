@@ -214,7 +214,7 @@ const PlanCard = ({ delay }) => {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay }}
       viewport={{ once: true }}
-      className="bg-white shadow-[0_0_40px_0_rgba(0,0,0,0.12)] rounded-[32px] p-6  h-[500px] sm:h-[432px]"
+      className="bg-white shadow-[0_0_40px_0_rgba(0,0,0,0.12)] rounded-[32px] p-6  "
     >
       {/* Header with Title and Edit Button */}
       <div className="mb-8">

@@ -48,7 +48,7 @@ const DashboardVisual = () => (
         }}
         transition={{ duration: 1, ease: "easeOut" }}
         viewport={{ once: true }}
-        className="relative z-10 w-[85%] shadow-2xl overflow-visible sm:top-0 -top-[6.5rem]"
+        className="relative z-10 w-[85%] shadow-2xl overflow-visible lg:top-0 -top-[6.5rem] md:-top-[2.5rem]"
       >
         <Image
           src="/images/why-zentra1.png"
