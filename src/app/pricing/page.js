@@ -296,7 +296,7 @@ export default function PricingPage() {
             ))}
           </div>
 
-          {/* Still have questions */}
+          {/* Still have questions
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -319,7 +319,7 @@ export default function PricingPage() {
                 Contact Us
               </a>
             </div>
-          </motion.div>
+          </motion.div> */}
         </div>
       </section>
     </>
